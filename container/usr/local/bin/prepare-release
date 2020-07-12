@@ -1,5 +1,4 @@
 #!/bin/sh
-
 set -Eeuo pipefail
 
 calculate_release_increment_since_last_release() {

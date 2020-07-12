@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 version=$(bundle exec bump current --value-only)
 tag=$(git describe)
-changelog_additions=$(git show CHANGELOG.md | grep "^+" | grep -v "b/CHANGELOG.md" | sed 's/^+//g' | grep -v "^<a name" | tail -n +2 | ruby -e "puts ARGF.read.strip")
+changelog_additions=$(git show CHANGELOG.md | grep "^+" | grep -v "b/CHANGELOG.md" | sed 's/^+//g' | grep -v "^<a name" | tail -n +2 | ruby -e "puts ARGF.read.strip") || true
 
 if [ -n "${changelog_additions}" ]; then
   cat <<-EOF >/tmp/RELEASE_NOTES.md
