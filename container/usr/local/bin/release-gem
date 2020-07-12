@@ -6,5 +6,20 @@ mkdir -p ~/.gem && touch ~/.gem/credentials
 
 # Copy the release Rakefile into the tmp dir, because it is ignored by git.
 # Stops all the Rake tasks from the source code being loaded, because it finds this one first
-cd /release
+pushd /release
 bundle exec rake release
+popd
+
+version=$(bundle exec bump current --value-only)
+tag=$(git describe)
+changelog_additions=$(git show CHANGELOG.md | grep "^+" | grep -v "b/CHANGELOG.md" | sed 's/^+//g' | grep -v "^<a name" | tail -n +2 | ruby -e "puts ARGF.read.strip")
+
+if [ -n "${changelog_additions}" ]; then
+  cat <<-EOF >tmp/RELEASE_NOTES.md
+  Version ${version}
+
+  ${changelog_additions}
+EOF
+
+  hub release create --file tmp/RELEASE_NOTES.md "${tag}"
+fi
