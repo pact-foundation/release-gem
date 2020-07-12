@@ -9,7 +9,5 @@ WORKDIR home
 ADD container /
 ENV BUNDLE_GEMFILE=/release/Gemfile
 RUN bundle install
-RUN git config --global user.email "beth@bethesque.com"
-RUN git config --global user.name "Beth Skurrie via Github Actions"
 
 ENTRYPOINT prepare-release
