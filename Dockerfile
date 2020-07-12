@@ -10,4 +10,4 @@ ADD container /
 ENV BUNDLE_GEMFILE=/release/Gemfile
 RUN bundle install
 
-ENTRYPOINT prepare-release
+ENTRYPOINT /entrypoint.sh
