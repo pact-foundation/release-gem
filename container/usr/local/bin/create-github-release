@@ -1,0 +1,19 @@
+#!/bin/sh
+set -Eeuo pipefail
+
+version=$(bundle exec bump current --value-only)
+tag=$(git describe)
+changelog_additions=$(git show CHANGELOG.md | grep "^+" | grep -v "b/CHANGELOG.md" | sed 's/^+//g' | grep -v "^<a name" | tail -n +2 | ruby -e "puts ARGF.read.strip")
+
+if [ -n "${changelog_additions}" ]; then
+  cat <<-EOF >/tmp/RELEASE_NOTES.md
+  Version ${version}
+
+  ${changelog_additions}
+EOF
+  echo "Creating Github release with release notes"
+  hub release create --file /tmp/RELEASE_NOTES.md "${tag}"
+else
+  echo "Creating Github release without release notes"
+  hub release create --message "Version ${version}" "${tag}"
+fi

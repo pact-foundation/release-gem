@@ -1,4 +1,5 @@
 #!/bin/sh
+set -Eeuo pipefail
 
 bundle exec ruby -e "
 require 'conventional_changelog'

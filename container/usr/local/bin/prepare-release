@@ -1,35 +1,33 @@
 #!/bin/sh
 
-# Set up .netrc file with GitHub credentials
-git_setup() {
-  git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-  git config --global user.name "${GITHUB_ACTOR}"
-    cat <<-EOF >$HOME/.netrc
-        machine github.com
-        login $GITHUB_ACTOR
-        password $GITHUB_TOKEN
-        machine api.github.com
-        login $GITHUB_ACTOR
-        password $GITHUB_TOKEN
-EOF
-    chmod 600 $HOME/.netrc
+set -Eeuo pipefail
+
+calculate_release_increment_since_last_release() {
+  calculate-release-increment "$(last-release-tag)"
 }
 
-git_setup
+version_file() {
+  bundle exec bump file --value-only
+}
 
-echo "::group::Internal logs"
-set -ex
+current_version() {
+  bundle exec bump current --value-only
+}
 
-if [ -z "${INCREMENT}" ]; then
-  last_release=$(last-release-tag)
-  INCREMENT=$(calculate-release-increment "${last_release}")
+bump() {
+  bundle exec bump ${1} --no-commit
+}
+
+if [ -z "${INCREMENT:-}" ]; then
+  INCREMENT=$(calculate_release_increment_since_last_release)
 fi
 
-bundle exec bump ${INCREMENT} --no-commit
-update-changelog
-version_file=$(bundle exec bump file --value-only)
-version=$(bundle exec bump current --value-only)
-git add CHANGELOG.md "${version_file}"
-git commit -m "chore(release): version ${version}"
+if [ -z "${INCREMENT:-}" ]; then
+  echo "No feat or fix commits since last release - cancelling release. Set the INCREMENT environment variable to force a release."
+  exit 1
+fi
 
-echo "::endgroup::"
+bump "${INCREMENT}"
+update-changelog
+git add CHANGELOG.md "$(version_file)"
+git commit -m "chore(release): version $(current_version)"

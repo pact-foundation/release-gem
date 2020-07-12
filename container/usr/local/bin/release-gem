@@ -1,5 +1,5 @@
 #!/bin/sh
-set -ex
+set -Eeuo pipefail
 
 # Overzealous validation stops rake release from running without a credentials file
 mkdir -p ~/.gem && touch ~/.gem/credentials
@@ -10,16 +10,4 @@ cd /release
 bundle exec rake release
 cd -
 
-version=$(bundle exec bump current --value-only)
-tag=$(git describe)
-changelog_additions=$(git show CHANGELOG.md | grep "^+" | grep -v "b/CHANGELOG.md" | sed 's/^+//g' | grep -v "^<a name" | tail -n +2 | ruby -e "puts ARGF.read.strip")
 
-if [ -n "${changelog_additions}" ]; then
-  cat <<-EOF >/tmp/RELEASE_NOTES.md
-  Version ${version}
-
-  ${changelog_additions}
-EOF
-
-  hub release create --file /tmp/RELEASE_NOTES.md "${tag}"
-fi
