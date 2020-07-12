@@ -15,11 +15,11 @@ tag=$(git describe)
 changelog_additions=$(git show CHANGELOG.md | grep "^+" | grep -v "b/CHANGELOG.md" | sed 's/^+//g' | grep -v "^<a name" | tail -n +2 | ruby -e "puts ARGF.read.strip")
 
 if [ -n "${changelog_additions}" ]; then
-  cat <<-EOF >tmp/RELEASE_NOTES.md
+  cat <<-EOF >/tmp/RELEASE_NOTES.md
   Version ${version}
 
   ${changelog_additions}
 EOF
 
-  hub release create --file tmp/RELEASE_NOTES.md "${tag}"
+  hub release create --file /tmp/RELEASE_NOTES.md "${tag}"
 fi
