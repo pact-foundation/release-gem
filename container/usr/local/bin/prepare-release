@@ -20,11 +20,6 @@ git_setup
 echo "::group::Internal logs"
 set -ex
 
-echo "GITHUB_ACTOR = $GITHUB_ACTOR"
-echo
-git config --list
-
-
 # Because the BUNDLE_GEMFILE is set on the docker image, everything
 # runs in the context of the
 
