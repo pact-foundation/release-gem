@@ -11,6 +11,7 @@ finish() {
 
 trap finish EXIT
 
+set-up-git
 echo "::group::Internal logs"
 prepare-release
 release-gem
