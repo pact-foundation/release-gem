@@ -1,6 +1,9 @@
 #!/bin/sh
+set -euo pipefail
 
-set -Eeuo pipefail
+if [ "${DEBUG:-}" = "true" ]; then
+  set -x
+fi
 
 : "${1:?Please provide the last release tag as an argument}"
 last_release_tag=$1

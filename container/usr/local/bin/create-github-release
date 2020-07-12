@@ -1,5 +1,9 @@
 #!/bin/sh
-set -Eeuo pipefail
+set -euo pipefail
+
+if [ "${DEBUG:-}" = "true" ]; then
+  set -x
+fi
 
 version=$(bundle exec bump current --value-only)
 tag=$(git describe)

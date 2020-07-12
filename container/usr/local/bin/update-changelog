@@ -1,5 +1,11 @@
 #!/bin/sh
-set -Eeuo pipefail
+set -euo pipefail
+
+if [ "${DEBUG:-}" = "true" ]; then
+  set -x
+fi
+
+echo "Updating CHANGELOG.md"
 
 bundle exec ruby -e "
 require 'conventional_changelog'
