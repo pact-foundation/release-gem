@@ -6,9 +6,9 @@ mkdir -p ~/.gem && touch ~/.gem/credentials
 
 # Copy the release Rakefile into the tmp dir, because it is ignored by git.
 # Stops all the Rake tasks from the source code being loaded, because it finds this one first
-pushd /release
+cd /release
 bundle exec rake release
-popd
+cd -
 
 version=$(bundle exec bump current --value-only)
 tag=$(git describe)
