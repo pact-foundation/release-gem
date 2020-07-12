@@ -1,6 +1,5 @@
-# action.yml
-name: 'Release gem'
-description: 'Release gem to rubygems, generate changelog, create release notes'
+name: 'Release Pact Foundation Rubygem'
+description: 'Bump version, generate changelog, release gem to rubygems, create Github release notes'
 runs:
   using: 'docker'
   image: 'Dockerfile'
