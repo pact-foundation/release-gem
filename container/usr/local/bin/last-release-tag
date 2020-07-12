@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cat CHANGELOG.md | grep "<a name" | head -n1 | cut -d'"' -f2

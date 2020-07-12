@@ -20,16 +20,13 @@ git_setup
 echo "::group::Internal logs"
 set -ex
 
-# Because the BUNDLE_GEMFILE is set on the docker image, everything
-# runs in the context of the
+if [ -z "${INCREMENT}" ]; then
+  last_release=$(last-release-tag)
+  INCREMENT=$(calculate-release-increment "${last_release}")
+fi
 
-increment=${INCREMENT:-patch}
-bundle exec bump ${increment} --no-commit
-bundle exec ruby -e "
-require 'conventional_changelog'
-require 'bump'
-ConventionalChangelog::Generator.new.generate! version: \"v#{Bump::Bump.current}\"
-"
+bundle exec bump ${INCREMENT} --no-commit
+update-changelog
 version_file=$(bundle exec bump file --value-only)
 version=$(bundle exec bump current --value-only)
 git add CHANGELOG.md "${version_file}"

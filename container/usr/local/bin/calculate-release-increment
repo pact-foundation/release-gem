@@ -1,0 +1,15 @@
+#!/bin/sh
+
+: "${1:?Please provide the last release tag as an argument}"
+last_release_tag=$1
+
+feat_commits=$(git log \
+  --pretty=format:"%s" \
+  --grep="^(feat)(\\(.*\\))?:" -E \
+  ${last_release_tag}..HEAD)
+
+if [ -n "${feat_commits}" ]; then
+  echo "minor"
+else
+  echo "patch"
+fi
