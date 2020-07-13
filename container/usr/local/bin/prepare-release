@@ -21,7 +21,10 @@ bump() {
   bundle exec bump ${1} --no-commit
 }
 
-if [ -z "${INCREMENT:-}" ]; then
+if [ -n "${INCREMENT:-}" ]; then
+  echo "INCREMENT set to '${INCREMENT}' - forcing release"
+else
+  echo "Calculating increment since last release..."
   INCREMENT=$(calculate_release_increment_since_last_release)
 fi
 
@@ -30,6 +33,7 @@ if [ -z "${INCREMENT:-}" ]; then
   exit 1
 fi
 
+echo "Performing ${INCREMENT} release"
 bump "${INCREMENT}"
 update-changelog
 git add CHANGELOG.md "$(version_file)"
