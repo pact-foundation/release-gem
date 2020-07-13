@@ -11,6 +11,13 @@ Feel free to use this action for gems outside the Pact Foundation, however, its 
 In your workflow YAML file:
 
 ```
+name: Release gem
+
+on:
+  repository_dispatch:
+    types:
+      - release
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,10 +25,11 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - uses: pact-foundation/release-gem@v0.0.1
+    - uses: pact-foundation/release-gem@v0.0.6
       env:
         GEM_HOST_API_KEY: '${{ secrets.RUBYGEMS_API_KEY }}'
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        INCREMENT: '${{ github.event.client_payload.increment }}'
 ```
 
 You will need to create the `RUBYGEMS_API_KEY` secret yourself, however, the GITHUB_TOKEN is provided by default.
