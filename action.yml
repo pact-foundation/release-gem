@@ -1,5 +1,5 @@
 name: 'Release Pact Foundation Rubygem'
-description: 'Bump version, generate changelog, release gem to rubygems, create Github release notes'
+description: 'Bump version, generate changelog, release gem to Rubygems, create Github release notes'
 runs:
   using: 'docker'
   image: 'Dockerfile'
