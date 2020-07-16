@@ -4,7 +4,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
 outputs:
-  version: # id of the output
+  version:
     description: 'The version number of the released gem'
   tag:
     description: 'The tag of the released code'
