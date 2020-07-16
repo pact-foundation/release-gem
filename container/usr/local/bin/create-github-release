@@ -5,8 +5,8 @@ if [ "${DEBUG:-}" = "true" ]; then
   set -x
 fi
 
-version=$(bundle exec bump current --value-only)
-tag=$(git describe)
+version=$(current-version)
+tag=$(current-tag)
 changelog_additions=$(git show CHANGELOG.md | grep "^+" | grep -v "b/CHANGELOG.md" | sed 's/^+//g' | grep -v "^<a name" | tail -n +2 | ruby -e "puts ARGF.read.strip") || true
 
 if [ -n "${changelog_additions}" ]; then

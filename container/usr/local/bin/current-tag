@@ -1,0 +1,8 @@
+#!/bin/sh
+set -euo pipefail
+
+if [ "${DEBUG:-}" = "true" ]; then
+  set -x
+fi
+
+git describe

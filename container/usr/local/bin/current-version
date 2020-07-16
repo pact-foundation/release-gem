@@ -1,0 +1,8 @@
+#!/bin/sh
+set -euo pipefail
+
+if [ "${DEBUG:-}" = "true" ]; then
+  set -x
+fi
+
+bundle exec bump current --value-only

@@ -13,10 +13,6 @@ version_file() {
   bundle exec bump file --value-only
 }
 
-current_version() {
-  bundle exec bump current --value-only
-}
-
 bump() {
   bundle exec bump ${1} --no-commit
 }
@@ -37,4 +33,4 @@ echo "Performing ${INCREMENT} release"
 bump "${INCREMENT}"
 update-changelog
 git add CHANGELOG.md "$(version_file)"
-git commit -m "chore(release): version $(current_version)"
+git commit -m "chore(release): version $(current-version)"

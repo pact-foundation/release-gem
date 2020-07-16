@@ -3,3 +3,8 @@ description: 'Bump version, generate changelog, release gem to Rubygems, create 
 runs:
   using: 'docker'
   image: 'Dockerfile'
+outputs:
+  version: # id of the output
+    description: 'The version number of the released gem'
+  tag:
+    description: 'The tag of the released code'
