@@ -16,7 +16,7 @@ name: Release gem
 on:
   repository_dispatch:
     types:
-      - release
+      - release-triggered
 
 jobs:
   build:
@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - uses: pact-foundation/release-gem@v0.0.6
+    - uses: pact-foundation/release-gem@v0.0.8
       env:
         GEM_HOST_API_KEY: '${{ secrets.RUBYGEMS_API_KEY }}'
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
