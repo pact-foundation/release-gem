@@ -5,5 +5,8 @@ if [ "${DEBUG:-}" = "true" ]; then
   set -x
 fi
 
+gem_name=$(ruby -e "puts eval(File.read(Dir['*.gemspec'].first), binding, Dir['*.gemspec'].first).name ")
+
 echo "::set-output name=version::$(current-version)"
 echo "::set-output name=tag::$(current-tag)"
+echo "::set-output name=gem_name::${gem_name}"
