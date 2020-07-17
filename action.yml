@@ -8,3 +8,5 @@ outputs:
     description: 'The version number of the released gem'
   tag:
     description: 'The tag of the released code'
+  increment:
+    description: 'The version increment of the release (minor, patch)'

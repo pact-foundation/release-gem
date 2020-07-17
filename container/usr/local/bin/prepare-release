@@ -29,6 +29,8 @@ if [ -z "${INCREMENT:-}" ]; then
   exit 1
 fi
 
+echo "::set-output name=increment::${INCREMENT}"
+
 echo "Performing ${INCREMENT} release"
 bump "${INCREMENT}"
 update-changelog
