@@ -33,6 +33,12 @@ echo "::set-output name=increment::${INCREMENT}"
 
 echo "Performing ${INCREMENT} release"
 bump "${INCREMENT}"
+
+echo "Generating RELEASE_NOTES.md"
+generate-release-notes
+
+echo "Updating CHANGELOG.md"
 update-changelog
+
 git add CHANGELOG.md "$(version_file)"
 git commit -m "chore(release): version $(current-version)"

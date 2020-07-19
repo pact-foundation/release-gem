@@ -1,0 +1,8 @@
+#!/bin/sh
+set -euo pipefail
+
+if [ "${DEBUG:-}" = "true" ]; then
+  set -x
+fi
+
+bundle exec conventional-changelog version=v$(current-version) dry_run=true version_headers=false > /tmp/RELEASE_NOTES.md

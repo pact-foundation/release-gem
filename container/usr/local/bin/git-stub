@@ -1,0 +1,13 @@
+#!/bin/sh
+set -euo pipefail
+
+if [ "${DEBUG:-}" = "true" ]; then
+  set -x
+fi
+
+
+if [ "${1:-}" = "log" ] || [ "${1:-}" = "describe" ]; then
+  git.bak $@
+else
+  echo "git $@"
+fi

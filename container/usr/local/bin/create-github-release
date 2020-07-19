@@ -7,16 +7,16 @@ fi
 
 version=$(current-version)
 tag=$(current-tag)
-changelog_additions=$(git show CHANGELOG.md | grep "^+" | grep -v "b/CHANGELOG.md" | sed 's/^+//g' | grep -v "^<a name" | tail -n +2 | ruby -e "puts ARGF.read.strip") || true
+release_notes="$(cat /tmp/RELEASE_NOTES.md)"
 
-if [ -n "${changelog_additions}" ]; then
-  cat <<-EOF >/tmp/RELEASE_NOTES.md
-  Version ${version}
+if [ -n "${release_notes}" ]; then
+  cat <<-EOF >/tmp/MESSAGE.md
+Version ${version}
 
-  ${changelog_additions}
+${release_notes}
 EOF
   echo "Creating Github release with release notes"
-  hub release create --file /tmp/RELEASE_NOTES.md "${tag}"
+  hub release create --file /tmp/MESSAGE.md "${tag}"
 else
   echo "Creating Github release without release notes"
   hub release create --message "Version ${version}" "${tag}"

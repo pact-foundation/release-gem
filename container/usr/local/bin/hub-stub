@@ -5,4 +5,4 @@ if [ "${DEBUG:-}" = "true" ]; then
   set -x
 fi
 
-bundle exec conventional-changelog version=v$(current-version) force=true
+echo "hub $@"
