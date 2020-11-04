@@ -19,13 +19,13 @@ on:
       - release-triggered
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - uses: pact-foundation/release-gem@v0.0.8
+    - uses: pact-foundation/release-gem@v0.0.11
       env:
         GEM_HOST_API_KEY: '${{ secrets.RUBYGEMS_API_KEY }}'
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
