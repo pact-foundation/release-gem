@@ -7,8 +7,9 @@ RUN gem install bundler -v '~>2.1'
 
 RUN mkdir -p home
 WORKDIR home
-ADD container /
+ADD container/release/Gemfile /release/Gemfile
 ENV BUNDLE_GEMFILE=/release/Gemfile
 RUN bundle install
+ADD container /
 
 ENTRYPOINT /entrypoint.sh

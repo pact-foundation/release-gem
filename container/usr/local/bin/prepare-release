@@ -17,22 +17,40 @@ bump() {
   bundle exec bump ${1} --no-commit
 }
 
-if [ -n "${INCREMENT:-}" ]; then
+replace() {
+  file=$1
+  old=$2
+  new=$3
+  ruby -e "
+    contents = File.read('${file}').gsub('${old}', '${new}')
+    File.write('${file}', contents)
+  "
+}
+
+if [ -n "${VERSION:-}" ]; then
+  echo "VERSION set to ${VERSION} - forcing release"
+elif [ -n "${INCREMENT:-}" ]; then
   echo "INCREMENT set to '${INCREMENT}' - forcing release"
 else
   echo "Calculating increment since last release..."
   INCREMENT=$(calculate_release_increment_since_last_release)
 fi
 
-if [ -z "${INCREMENT:-}" ]; then
-  echo "No feat or fix commits since last release - cancelling release. Set the INCREMENT environment variable to force a release."
+if [ -z "${INCREMENT:-}" ] && [ -z "${VERSION:-}" ]; then
+  echo "No feat or fix commits since last release - cancelling release. Set the INCREMENT or VERSION environment variable to force a release."
   exit 1
 fi
 
-echo "::set-output name=increment::${INCREMENT}"
+if [ -n "${VERSION:-}" ]; then
+  echo "::set-output name=increment::${INCREMENT:-pre}"
+  replace "$(version_file)" "$(current-version)" "${VERSION}"
+  echo "Setting version to ${VERSION}"
+else
+  echo "::set-output name=increment::${INCREMENT}"
 
-echo "Performing ${INCREMENT} release"
-bump "${INCREMENT}"
+  echo "Performing ${INCREMENT} release"
+  bump "${INCREMENT}"
+fi
 
 echo "Generating RELEASE_NOTES.md"
 generate-release-notes
