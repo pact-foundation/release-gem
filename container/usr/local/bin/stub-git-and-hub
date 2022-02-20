@@ -3,7 +3,7 @@ set -euo pipefail
 
 hub_path=$(which hub)
 mv ${hub_path} ${hub_path}.bak
-mv /usr/local/bin/hub-stub /usr/local/bin/hub
+mv /usr/local/bin/gh-stub /usr/local/bin/gh
 
 git_path=$(which git)
 mv ${git_path} ${git_path}.bak

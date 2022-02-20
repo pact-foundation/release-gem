@@ -1,7 +1,6 @@
-FROM ruby:2.6-alpine3.12
+FROM ruby:2.7.5-alpine3.15
 
-RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing hub
-RUN apk add --update --no-cache git openssh bash
+RUN apk add --update --no-cache git openssh bash github-cli
 RUN gem update --system
 RUN gem install bundler -v '~>2.1'
 

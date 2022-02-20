@@ -9,15 +9,4 @@ version=$(current-version)
 tag=$(current-tag)
 release_notes="$(cat /tmp/RELEASE_NOTES.md)"
 
-if [ -n "${release_notes}" ]; then
-  cat <<-EOF >/tmp/MESSAGE.md
-Version ${version}
-
-${release_notes}
-EOF
-  echo "Creating Github release with release notes"
-  hub release create --file /tmp/MESSAGE.md "${tag}"
-else
-  echo "Creating Github release without release notes"
-  hub release create --message "Version ${version}" "${tag}"
-fi
+gh release create "${tag}" --title "Version ${version}" --notes-file /tmp/RELEASE_NOTES.md

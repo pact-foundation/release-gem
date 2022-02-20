@@ -5,4 +5,4 @@ if [ "${DEBUG:-}" = "true" ]; then
   set -x
 fi
 
-echo "hub $@"
+echo "gh $@"
