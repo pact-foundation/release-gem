@@ -1,4 +1,4 @@
-FROM ruby:2.7.5-alpine3.15
+FROM ruby:2-alpine3.15
 
 RUN apk add --update --no-cache git openssh bash github-cli
 RUN gem update --system
