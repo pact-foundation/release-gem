@@ -42,11 +42,11 @@ if [ -z "${INCREMENT:-}" ] && [ -z "${VERSION:-}" ]; then
 fi
 
 if [ -n "${VERSION:-}" ]; then
-  echo "::set-output name=increment::${INCREMENT:-pre}"
+  echo "increment=${INCREMENT:-pre}" >> $GITHUB_OUTPUT
   replace "$(version_file)" "$(current-version)" "${VERSION}"
   echo "Setting version to ${VERSION}"
 else
-  echo "::set-output name=increment::${INCREMENT}"
+  echo "increment=${INCREMENT}" >> $GITHUB_OUTPUT
 
   echo "Performing ${INCREMENT} release"
   bump "${INCREMENT}"

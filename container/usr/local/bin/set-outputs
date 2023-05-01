@@ -7,6 +7,6 @@ fi
 
 gem_name=$(ruby -e "puts eval(File.read(Dir['*.gemspec'].first), binding, Dir['*.gemspec'].first).name ")
 
-echo "::set-output name=version::$(current-version)"
-echo "::set-output name=tag::$(current-tag)"
-echo "::set-output name=gem_name::${gem_name}"
+echo "version=$(current-version)" >> $GITHUB_OUTPUT
+echo "tag=$(current-tag)" >> $GITHUB_OUTPUT
+echo "gem_name=${gem_name}" >> $GITHUB_OUTPUT
