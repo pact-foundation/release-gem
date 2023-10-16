@@ -1,8 +1,8 @@
-FROM ruby:2.7.5-alpine3.15
+FROM ruby:3.2.2-alpine3.18
 
 RUN apk add --update --no-cache git openssh bash github-cli
 RUN gem update --system
-RUN gem install bundler -v '~>2.1'
+RUN gem install bundler -v '~>2.4'
 
 RUN mkdir -p home
 WORKDIR home
