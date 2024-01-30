@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-alpine3.18
+FROM ruby:3.3-alpine3.18
 
 RUN apk add --update --no-cache git openssh bash github-cli
 RUN gem update --system
